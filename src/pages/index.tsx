@@ -2,7 +2,7 @@ import { SignIn, useUser } from "@clerk/nextjs";
 
 export default function SignInPage() {
   
-const {user, isLoaded, isSignedIn} = useUser();
+const {isLoaded, isSignedIn} = useUser();
 
 
   return (
