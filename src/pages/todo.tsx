@@ -1,8 +1,10 @@
 "use client";
+import { api } from "~/utils/api";
 
 import { UserButton } from "@clerk/nextjs";
 
 export default function Todo() {
+  const {data} = api.todo.getAll.useQuery();
   return (
     <>
       <nav>
@@ -13,7 +15,10 @@ export default function Todo() {
         <input placeholder="Add Your Todo Here" type="text" />
       </form>
       <main>
-        <div>A todo item</div>
+        <div>{data?.map((todo)=>( 
+          <div key={todo.id}>{todo.text}</div>)
+        )}
+        </div>
       </main>
     </>
   )

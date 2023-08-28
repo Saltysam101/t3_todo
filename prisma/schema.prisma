@@ -16,5 +16,5 @@ generator client {
 model Todo {
     id        String   @id @default(cuid())
     userId    String   
-    text      String
+    text      String  @db.VarChar(255)
 }
