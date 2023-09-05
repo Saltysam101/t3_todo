@@ -10,24 +10,11 @@ const {data} = api.todo.getAll.useQuery();
 
   return (
     <>
-     {!isLoaded && !isSignedIn ? 
+     { !user || !isLoaded || !isSignedIn ? 
       <SignIn />
-      :
-      <>
-        <nav>
-          <UserButton />
-        </nav>
-        <main>
-          {data ? data.map((todo) => {
-            return (
-              <li key={todo.id}>
-                {todo.userId === user?.id ? todo.text : null}
-              </li>
-            )
-          } ) : <>No todos here</>}
-        </main>
-      </>
-     }
+      : 
+      <UserButton />
+       }
    
     
         
