@@ -8,12 +8,34 @@ export default function SignInPage() {
 
 const {data} = api.todo.getAll.useQuery();
 
+const currentUserId = user?.id;
+
+const currentUserTodos = data?.map((todo) => {
+  if(todo?.userId === currentUserId){
+    return(
+      <li key={todo.id}>{todo.text}</li>
+    )
+  }
+})
+
+
+
   return (
     <>
      { !user || !isLoaded || !isSignedIn ? 
       <SignIn />
       : 
-      <UserButton />
+      <>
+        <UserButton afterSignOutUrl="/"/>
+        <form>
+          <input type="text" placeholder="Type your todos here" />
+        </form>
+        <main>
+          <ul>
+            {currentUserTodos}
+          </ul>
+        </main>
+      </>
        }
    
     
