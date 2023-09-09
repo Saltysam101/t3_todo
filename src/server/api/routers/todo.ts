@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, privateProcedure, publicProcedure } from "~/server/api/trpc";
+
 
 export const todoRouter = createTRPCRouter({
   hello: publicProcedure
@@ -11,5 +12,18 @@ export const todoRouter = createTRPCRouter({
     }),
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.todo.findMany();
+  }),
+  createTodo: privateProcedure.input(z.object({
+    text: z.string().min(1).max(255),
+  })).mutation(async({ctx, input}) => {
+    const userId = ctx.userId;
+
+    const todo = await ctx.prisma.todo.create({
+      data : {
+        userId,
+        text: input.text
+      }
+    });
+    return todo;
   }),
 });
