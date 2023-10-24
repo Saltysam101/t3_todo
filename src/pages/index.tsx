@@ -4,8 +4,8 @@ import { useUser, UserButton } from "@clerk/nextjs";
 import { useState } from "react";
 
 export default function SignInPage() {
-  const {user, isLoaded, isSignedIn} = useUser();
-  
+const {user, isLoaded, isSignedIn} = useUser();
+const utils = api.useContext();
 
 const {data} = api.todo.getAll.useQuery();
 
@@ -15,13 +15,35 @@ const {mutate} = api.todo.createTodo.useMutation();
 
 const currentUserId = user?.id;
 
-const currentUserTodos = data?.map((todo) => {
-  if(todo?.userId === currentUserId){
-    return(
-      <li key={todo.id}>{todo.text}</li>
+const editTodo = api.todo.editTodo.useMutation({
+  async onMutate({id, data}) {
+    await utils.todo.getAll.cancel();
+    const allTodos = utils.todo.getAll.getData();
+    if(!allTodos) {
+      return;
+    }
+    utils.todo.getAll.setData(
+      undefined,
+      allTodos.map((todo) => 
+      todo.id === id ? {...todo, ...data} : todo,)
     )
   }
 })
+
+const currentUserTodos = data?.map((todo) => {
+  if(todo?.userId === currentUserId){
+    return(
+      <li key={todo.id}>
+        {todo.text}
+        <div>
+          <button onClick={() => editTodo.mutate({id: todo.id, data: {text: input}})}>Edit</button>
+          <button>Delete</button>
+        </div>
+        </li>
+    )
+  }
+})
+
 
 
 
