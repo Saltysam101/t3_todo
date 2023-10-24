@@ -14,6 +14,9 @@ const {mutate} = api.todo.createTodo.useMutation();
 
 
 const currentUserId = user?.id;
+const todo = {
+  id: ""
+}
 
 const editTodo = api.todo.editTodo.useMutation({
   async onMutate({id, data}) {
@@ -30,14 +33,29 @@ const editTodo = api.todo.editTodo.useMutation({
   }
 })
 
+const deleteTodo = api.todo.deleteTodo.useMutation({
+  async onMutate() {
+    await utils.todo.getAll.cancel();
+    const allTodos = utils.todo.getAll.getData();
+    if(!allTodos){
+      return
+    }
+    utils.todo.getAll.setData(
+      undefined,
+      allTodos.filter((t) => t.id != todo.id)
+    )
+  }
+})
+
 const currentUserTodos = data?.map((todo) => {
+  todo.id = todo.id
   if(todo?.userId === currentUserId){
     return(
       <li key={todo.id}>
         {todo.text}
         <div>
           <button onClick={() => editTodo.mutate({id: todo.id, data: {text: input}})}>Edit</button>
-          <button>Delete</button>
+          <button onClick={() => deleteTodo.mutate({id: todo.id})}>Delete</button>
         </div>
         </li>
     )
