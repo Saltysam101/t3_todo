@@ -51,11 +51,11 @@ const currentUserTodos = data?.map((todo) => {
   todo.id = todo.id
   if(todo?.userId === currentUserId){
     return(
-      <li key={todo.id}>
+      <li className="flex" key={todo.id}>
         {todo.text}
         <div>
-          <button onClick={() => editTodo.mutate({id: todo.id, data: {text: input}})}>Edit</button>
-          <button onClick={() => deleteTodo.mutate({id: todo.id})}>Delete</button>
+          <button className="bg-amber-300 ml-2" onClick={() => editTodo.mutate({id: todo.id, data: {text: input}})}>Edit</button>
+          <button className="bg-red-600 ml-2" onClick={() => deleteTodo.mutate({id: todo.id})}>Delete</button>
         </div>
         </li>
     )
@@ -72,8 +72,9 @@ const currentUserTodos = data?.map((todo) => {
       : 
       <>
         <UserButton afterSignOutUrl="/"/>
-        <form>
+        <form className="flex justify-center">
           <input
+          className="border-b-2"
            type="text" 
            placeholder="Type your todos here"
            value={input}
@@ -81,8 +82,8 @@ const currentUserTodos = data?.map((todo) => {
            />
            <button onClick={() => mutate({text: input})}>Add</button>
         </form>
-        <main>
-          <ul>
+        <main className="h-screen flex justify-center items-start mt-4">
+          <ul className="w-1/2">
             {currentUserTodos}
           </ul>
         </main>
