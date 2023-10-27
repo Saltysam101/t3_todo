@@ -51,11 +51,11 @@ const currentUserTodos = data?.map((todo) => {
   todo.id = todo.id
   if(todo?.userId === currentUserId){
     return(
-      <li className="flex" key={todo.id}>
+      <li className="flex justify-between" key={todo.id}>
         {todo.text}
         <div>
-          <button className="bg-amber-300 ml-2" onClick={() => editTodo.mutate({id: todo.id, data: {text: input}})}>Edit</button>
-          <button className="bg-red-600 ml-2" onClick={() => deleteTodo.mutate({id: todo.id})}>Delete</button>
+          <button className="bg-amber-300 ml-2 w-9 h-8 rounded-sm font-bold hover:text-white hover:bg-amber-400" onClick={() => editTodo.mutate({id: todo.id, data: {text: input}})}>Edit</button>
+          <button className="bg-red-600 ml-2 w-14 h-8 rounded-sm font-bold hover:text-white hover:bg-red-700" onClick={() => deleteTodo.mutate({id: todo.id})}>Delete</button>
         </div>
         </li>
     )
@@ -70,7 +70,7 @@ const currentUserTodos = data?.map((todo) => {
      { !user || !isLoaded || !isSignedIn ? 
       <SignIn />
       : 
-      <>
+      <div className="m-4">
         <UserButton afterSignOutUrl="/"/>
         <form className="flex justify-center">
           <input
@@ -80,14 +80,14 @@ const currentUserTodos = data?.map((todo) => {
            value={input}
            onChange={(e) => setInput(e.target.value)} 
            />
-           <button onClick={() => mutate({text: input})}>Add</button>
+           <button className="ml-4 bg-green-400 w-9 h-8 rounded-sm font-bold hover:text-white hover:bg-green-500" onClick={() => mutate({text: input})}>Add</button>
         </form>
         <main className="h-screen flex justify-center items-start mt-4">
-          <ul className="w-1/2">
+          <ul className="w-5/5 md:w-5/12 lg:w-1/4">
             {currentUserTodos}
           </ul>
         </main>
-      </>
+      </div>
        }
    
     
