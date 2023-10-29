@@ -5,10 +5,6 @@ import { useUser } from "@clerk/nextjs";
 export default function SignInPage() {
 const {user, isLoaded, isSignedIn} = useUser();
 
-
-
-
-
   return (
     <>
      { !user || !isLoaded || !isSignedIn ? 
@@ -16,9 +12,6 @@ const {user, isLoaded, isSignedIn} = useUser();
       : 
       <div>How are you still here?</div>
        }
-   
-    
-        
     </>
   );
 }
