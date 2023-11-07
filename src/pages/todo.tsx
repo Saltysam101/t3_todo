@@ -51,7 +51,7 @@ const currentUserTodos = data?.map((todo) => {
   todo.id = todo.id
   if(todo?.userId === currentUserId){
     return(
-      <li className="flex justify-between" key={todo.id}>
+      <li className="flex justify-between mt-4" key={todo.id}>
         {todo.text}
         <div>
           <button className="bg-amber-300 ml-2 w-9 h-8 rounded-sm font-bold hover:text-white hover:bg-amber-400" onClick={() => editTodo.mutate({id: todo.id, data: {text: input}})}>Edit</button>
