@@ -1,7 +1,7 @@
 # Create T3 App
 
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
-This project uses clerk for user authentication. Please look at '.env.example' for help with setting up clerk environment variables.
+This project uses clerk for user authentication. Here's the documentation for how to set up clerk with Next.js: [Clerk](https://clerk.com/docs/quickstarts/nextjs)
 
 ## What's next? How do I make an app with this?
 
